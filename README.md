@@ -52,7 +52,7 @@ FixHop/
 ## Prerequisites
 
 - Node.js 18+
-- A [MongoDB Compass] (or Mongo Atlas)
+- A [MongoDB Compass] (or Mongo Atlass)
 
 ---
 
@@ -64,7 +64,7 @@ Copy `backend/.env.example` to `backend/.env` and fill in your values:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/fixhop?retryWrites=true&w=majority
+MONGODB_URI=mongodb://localhost:27017/FixHop
 ```
 
 ### Frontend — `frontend/.env.local`
