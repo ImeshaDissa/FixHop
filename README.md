@@ -18,7 +18,7 @@ A full-stack web application where homeowners can post service requests and trad
 ## Project Structure
 
 ```
-globaltna-assessment/
+FixHop/
 ├── backend/
 │   ├── src/
 │   │   ├── models/JobRequest.js
@@ -52,7 +52,7 @@ globaltna-assessment/
 ## Prerequisites
 
 - Node.js 18+
-- A [MongoDB Compass] (or Mongo Atlass)
+- A [MongoDB Compass] (or Mongo Atlas)
 
 ---
 
@@ -64,7 +64,7 @@ Copy `backend/.env.example` to `backend/.env` and fill in your values:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/globaltna?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/fixhop?retryWrites=true&w=majority
 ```
 
 ### Frontend — `frontend/.env.local`
@@ -84,8 +84,8 @@ NEXT_PUBLIC_API_URL=http://localhost:5000
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/<your-username>/globaltna-assessment.git
-cd globaltna-assessment
+git clone https://github.com/ImeshaDissa/FixHop.git
+cd FixHop
 
 # Install backend dependencies
 cd backend && npm install
@@ -170,7 +170,7 @@ cd backend
 npm test
 ```
 
-> Tests require a valid `MONGODB_URI` in your `backend/.env`. They create and clean up their own data via a separate test database or the same Atlas cluster (a test collection is cleared after each test).
+> Tests require a valid `MONGODB_URI` in your `backend/.env`. They create and clean up their own data via a separate test database or the same Atlas cluster (a test collection is cleared after each run).
 
 ---
 
