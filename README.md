@@ -1,6 +1,15 @@
-# FixHop
+# FixHop — Mini Service Request Board
 
 A full-stack web application where homeowners can post service requests and tradespeople can browse, filter, and manage them.
+
+Built as a technical assessment.
+
+---
+
+## Live Demo
+
+- **Frontend:** https://fixhop-puce.vercel.app/
+- **Backend API:** https://fixhop.up.railway.app
 
 ---
 
@@ -10,8 +19,9 @@ A full-stack web application where homeowners can post service requests and trad
 |----------|---------------------------------------|
 | Frontend | Next.js 14 (App Router), Tailwind CSS |
 | Backend  | Node.js + Express                     |
-| Database | MongoDB Compass                       |
+| Database | MongoDB Atlas                         |
 | ODM      | Mongoose                              |
+| Hosting  | Vercel (frontend), Railway (backend)  |
 
 ---
 
@@ -34,7 +44,7 @@ FixHop/
 │   │   ├── app/
 │   │   │   ├── layout.jsx
 │   │   │   ├── globals.css
-│   │   │   ├── page.jsx              # Home - job list with filters
+│   │   │   ├── page.jsx              # Home — job list with filters
 │   │   │   └── jobs/
 │   │   │       ├── new/page.jsx      # New job form
 │   │   │       └── [id]/page.jsx     # Job detail
@@ -42,6 +52,7 @@ FixHop/
 │   │   │   ├── JobCard.jsx
 │   │   │   └── Badges.jsx
 │   │   └── lib/api.js
+│   ├── vercel.json
 │   ├── .env.local.example
 │   └── package.json
 └── README.md
@@ -52,7 +63,7 @@ FixHop/
 ## Prerequisites
 
 - Node.js 18+
-- A [MongoDB Compass] (or Mongo Atlass)
+- A [MongoDB Atlas](https://www.mongodb.com/atlas) free-tier cluster
 
 ---
 
@@ -64,7 +75,7 @@ Copy `backend/.env.example` to `backend/.env` and fill in your values:
 
 ```env
 PORT=5000
-MONGODB_URI=mongodb://localhost:27017/FixHop
+MONGODB_URI=mongodb+srv://<username>:<password>@cluster0.xxxxx.mongodb.net/globaltna?retryWrites=true&w=majority
 ```
 
 ### Frontend — `frontend/.env.local`
@@ -75,7 +86,7 @@ Copy `frontend/.env.local.example` to `frontend/.env.local`:
 NEXT_PUBLIC_API_URL=http://localhost:5000
 ```
 
-> When deployed, replace this with your Render/Railway backend URL.
+When deployed, replace this with your Railway backend URL.
 
 ---
 
@@ -99,7 +110,7 @@ cd ../frontend && npm install
 ```bash
 # Backend
 cp backend/.env.example backend/.env
-# Edit backend/.env with your MongoDB URI
+# Edit backend/.env with your MongoDB Atlas URI
 
 # Frontend
 cp frontend/.env.local.example frontend/.env.local
@@ -138,13 +149,13 @@ The app runs at `http://localhost:3000`.
 
 ## API Reference
 
-| Method | Endpoint         | Description                                      |
-|--------|------------------|--------------------------------------------------|
-| GET    | /api/jobs        | List all jobs. Supports `?category=`, `?status=`, `?search=` |
-| GET    | /api/jobs/:id    | Get a single job by ID                          |
-| POST   | /api/jobs        | Create a new job request                         |
-| PATCH  | /api/jobs/:id    | Update status only (`Open`, `In Progress`, `Closed`) |
-| DELETE | /api/jobs/:id    | Delete a job request                             |
+| Method | Endpoint      | Description                                                   |
+|--------|---------------|---------------------------------------------------------------|
+| GET    | /api/jobs     | List all jobs. Supports `?category=`, `?status=`, `?search=` |
+| GET    | /api/jobs/:id | Get a single job by ID                                        |
+| POST   | /api/jobs     | Create a new job request                                      |
+| PATCH  | /api/jobs/:id | Update status only (`Open`, `In Progress`, `Closed`)          |
+| DELETE | /api/jobs/:id | Delete a job request                                          |
 
 ### Example POST body
 
@@ -163,14 +174,14 @@ The app runs at `http://localhost:3000`.
 
 ## Running Tests
 
-Tests cover the GET and POST /api/jobs endpoints and PATCH status updates.
+Tests cover GET (list, filters), POST (create, validation), and PATCH (status update) endpoints.
 
 ```bash
 cd backend
 npm test
 ```
 
-> Tests require a valid `MONGODB_URI` in your `backend/.env`. They create and clean up their own data via a separate test database or the same Atlas cluster (a test collection is cleared after each run).
+Requires a valid `MONGODB_URI` in `backend/.env`. Test data is created and cleaned up automatically after each test run.
 
 ---
 
@@ -188,23 +199,5 @@ npm test
 
 - Keyword search (`?search=`) across title and description via MongoDB `$regex`
 - Seed script (`npm run seed`) with 8 realistic sample jobs
-- Unit tests on GET (list, filters) and POST (create, validation) and PATCH (status update) endpoints
-
----
-
-## Deployment
-
-### Backend — Render
-
-1. Create a new **Web Service** on [Render](https://render.com)
-2. Connect your GitHub repository, set root to `backend/`
-3. Build command: `npm install`
-4. Start command: `npm start`
-5. Add environment variables: `MONGODB_URI`, `PORT`
-
-### Frontend — Vercel
-
-1. Import your GitHub repository on [Vercel](https://vercel.com)
-2. Set root directory to `frontend/`
-3. Add environment variable: `NEXT_PUBLIC_API_URL=https://your-backend.onrender.com`
-4. Deploy
+- Unit tests on GET, POST, and PATCH endpoints using Jest and Supertest
+- Deployed frontend to Vercel and backend to Railway with live URLs above
